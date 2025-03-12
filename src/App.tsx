@@ -1,5 +1,7 @@
+import { PodcastPage } from '@/pages/PodcastPage';
+
 function App() {
-  return <div>hello</div>;
+  return <PodcastPage />;
 }
 
 export default App;

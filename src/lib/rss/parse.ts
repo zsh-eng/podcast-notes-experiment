@@ -41,7 +41,7 @@ type PodcastFeed = {
   feed_last_updated: string;
 };
 
-type PodcastItem = {
+export type PodcastItem = {
   guid: string;
   title: string;
   description: string;
