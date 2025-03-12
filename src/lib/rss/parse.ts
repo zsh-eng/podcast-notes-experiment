@@ -53,7 +53,7 @@ type PodcastItem = {
   episode_artwork_url?: string;
 };
 
-type PodcastFeedResponse = {
+export type PodcastFeedResponse = {
   podcast: PodcastFeed;
   episodes: PodcastItem[];
 };
