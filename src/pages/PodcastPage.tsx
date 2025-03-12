@@ -1,10 +1,12 @@
 import { EpisodeList } from '@/components/podcast/episode-list';
 import { PodcastHeader } from '@/components/podcast/podcast-header';
 import { PodcastPlayer } from '@/components/podcast/podcast-player';
+import { PodcastTranscript } from '@/components/podcast/podcast-transcript';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { type PodcastItem } from '@/lib/rss/parse';
 import { SAMPLE_PODCAST } from '@/lib/sample/data';
+import { SAMPLE_TRANSCRIPT } from '@/lib/sample/transcript';
 import { useState } from 'react';
 
 export function PodcastPage() {
@@ -15,6 +17,8 @@ export function PodcastPage() {
     null
   );
 
+  const [transcriptTime, setTranscriptTime] = useState(0);
+
   return (
     <div className='container mx-auto py-8 px-4'>
       <PodcastHeader podcast={podcast} />
@@ -24,6 +28,16 @@ export function PodcastPage() {
           title={selectedEpisode.title}
           author={podcast.author}
           artworkUrl={selectedEpisode.episode_artwork_url}
+          onTimeUpdate={(currentTime) => {
+            setTranscriptTime(currentTime);
+          }}
+        />
+      )}
+
+      {selectedEpisode && (
+        <PodcastTranscript
+          currentTime={transcriptTime}
+          transcription={SAMPLE_TRANSCRIPT}
         />
       )}
 

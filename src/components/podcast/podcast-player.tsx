@@ -9,6 +9,7 @@ interface PodcastPlayerProps {
   title: string;
   author: string;
   artworkUrl?: string;
+  onTimeUpdate?: (currentTime: number) => void;
 }
 
 export function PodcastPlayer({
@@ -16,6 +17,7 @@ export function PodcastPlayer({
   title,
   author,
   artworkUrl,
+  onTimeUpdate,
 }: PodcastPlayerProps) {
   const audioRef = useRef<HTMLAudioElement>(null);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -26,7 +28,10 @@ export function PodcastPlayer({
     const audio = audioRef.current;
     if (!audio) return;
 
-    const handleTimeUpdate = () => setCurrentTime(audio.currentTime);
+    const handleTimeUpdate = () => {
+      setCurrentTime(audio.currentTime);
+      onTimeUpdate?.(audio.currentTime);
+    };
     const handleLoadedMetadata = () => setDuration(audio.duration);
 
     audio.addEventListener('timeupdate', handleTimeUpdate);
@@ -36,7 +41,7 @@ export function PodcastPlayer({
       audio.removeEventListener('timeupdate', handleTimeUpdate);
       audio.removeEventListener('loadedmetadata', handleLoadedMetadata);
     };
-  }, []);
+  }, [onTimeUpdate]);
 
   const togglePlayPause = () => {
     if (!audioRef.current) return;
